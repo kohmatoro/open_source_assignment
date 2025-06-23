@@ -1,0 +1,454 @@
+body {
+            margin: 0;
+            padding: 40px;
+            font-family: Helvetica, sans-serif;
+            background-color: #f8f8f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* 다크모드 버튼 스타일 */
+        .dark-mode-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #88cfdc;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .dark-mode-toggle img {
+            width: 28px;
+            /* SVG 아이콘 크기 조절 */
+            height: 28px;
+            /* SVG 아이콘 크기 조절 */
+        }
+
+        /* 다크모드 스타일 */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .timer-card,
+        body.dark-mode .time-setting-box,
+        body.dark-mode .tip-box,
+        body.dark-mode .music-box,
+        body.dark-mode .saved-time-container {
+            background-color: #2d2d2d;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        body.dark-mode .timer-display,
+        body.dark-mode .time-setting-box .label,
+        body.dark-mode .time-setting-box label,
+        body.dark-mode .tip-box,
+        body.dark-mode .music-info .title,
+        body.dark-mode .music-info .artist,
+        body.dark-mode .saved-time-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .time-setting-inputs input {
+            background-color: #404040;
+            color: #ffffff;
+            border: 1px solid #555;
+        }
+
+        body.dark-mode .saved-time-list li {
+            background-color: #404040;
+            color: #ffffff;
+        }
+
+        body.dark-mode .mode-indicator {
+            background-color: #404040;
+            color: #ffffff;
+        }
+
+        body.dark-mode .dark-mode-toggle {
+            background-color: #555;
+        }
+
+        .header {
+            font-size: 30px;
+            font-weight: bold;
+            color: #000000;
+            margin-bottom: 40px;
+        }
+
+        body.dark-mode .header {
+            color: #ffffff;
+        }
+
+        .main-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            /* 각 섹션 사이의 간격 */
+        }
+
+        .timer-card {
+            width: 589px;
+            height: 139px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timer-display {
+            font-size: 100px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .top-row {
+            display: flex;
+            flex-direction: column;
+            width: 589px;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .button-box2 {
+            /* position: absolute; 제거 */
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: center;
+            /* 버튼들을 오른쪽으로 정렬 */
+            width: 100%;
+            /* middle-row 너비에 맞춤 */
+            margin-bottom: 10px;
+            /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); */
+        }
+
+        .middle-row {
+            display: flex;
+            flex-direction: column;
+            /* 세로로 배치 변경 */
+            width: 589px;
+            align-items: center;
+            /* 내부 요소들이 width: 100%를 가지므로 실제 정렬 효과는 크지 않음 */
+            gap: 15px;
+            /* button-box와 time-settings-and-tip-wrapper 사이 간격 */
+        }
+
+        .button-box {
+            /* position: absolute; 제거 */
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            /* 버튼들을 오른쪽으로 정렬 */
+            width: 100%;
+            /* middle-row 너비에 맞춤 */
+        }
+
+        .time-settings-and-tip-wrapper {
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            position: relative;
+            bottom: 50px;
+            /* 필요에 따라 숫자 조절 */
+            z-index: 10;
+            /* 겹칠 때 위로 나오게 */
+        }
+
+        .time-setting-box {
+            position: relative;
+            /* apply-button 때문에 유지 */
+            width: 196px;
+            height: 97px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .time-setting-box .label {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .time-setting-box label {
+            font-size: 11px;
+        }
+
+        .time-setting-inputs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 4px;
+        }
+
+        .time-setting-inputs input {
+            width: 30%;
+        }
+
+        .apply-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 55px;
+            height: 19px;
+            font-size: 13px;
+            font-weight: bold;
+            color: white;
+            background-color: #88cfdc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-self: flex-end;
+            z-index: 12;
+            /* 적용 버튼이 항상 위에 오도록 */
+        }
+
+        .tip-box {
+            position: relative;
+            bottom: 140px;
+            /* 필요에 따라 숫자 조절 */
+            left: 120px;
+            z-index: 11;
+            /* 겹칠 때 위로 나오게 (버튼보다는 낮게, 다른 요소보다는 높게) */
+            width: 350px;
+            height: 66px;
+            /* 고정 높이 유지, 필요시 min-height 또는 auto로 변경 가능 */
+            background-color: #ffffff;
+            border-radius: 7px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 0;
+            /* margin-left: 20px; -> 제거 (time-settings-and-tip-wrapper에서 space-between으로 간격 조절) */
+        }
+
+        .mode-indicator {
+            height: 37px;
+            width: 589px;
+            padding: 0 10px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #000000;
+            background-color: #e0f7fa;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            white-space: nowrap;
+        }
+
+        .round-button {
+            width: 90px;
+            height: 37px;
+            border-radius: 7px;
+            background-color: #88cfdc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            /* 이모지 크기를 위해 추가 또는 조절 */
+            z-index: 12;
+            /* 버튼이 항상 위에 오도록 */
+        }
+
+        .round-button img {
+            width: 22px;
+            height: 28px;
+        }
+
+        .music-box {
+            width: 589px;
+            /* 너비를 589px로 통일하거나, 현재 값 유지. 여기서는 유지. */
+            height: 70px;
+            background-color: #ffffff;
+            border-radius: 9px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            position: relative;
+            bottom: 140px;
+            /* 필요에 따라 숫자 조절 */
+
+            z-index: 10;
+            /* 겹칠 때 위로 나오게 */
+            /* padding 포함한 너비 계산 */
+        }
+
+        .music-info {
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .music-info .title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .music-info .artist {
+            font-size: 15px;
+            color: #000000;
+        }
+
+        .music-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .icon-button {
+            width: 44px;
+            height: 37px;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            cursor: pointer;
+            z-index: 12;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .icon-button img {
+            width: 28px;
+            height: 28px;
+        }
+
+        .icon-button.mute {
+            background-color: #adbbbe;
+        }
+
+        .icon-button:not(.mute) {
+            background-color: #88cfdc;
+        }
+
+        .saved-time-container {
+            width: 589px;
+            /* 너비를 589px로 통일하거나, 현재 값 유지. 여기서는 유지. */
+            min-height: 80px;
+            background-color: #ffffff;
+            border-radius: 9px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            box-sizing: border-box;
+            /* padding 포함한 너비 계산 */
+            /* margin-top: 20px; -> main-wrapper의 gap으로 대체되거나 함께 사용됨 */
+            position: relative;
+            bottom: 140px;
+            /* 필요에 따라 숫자 조절 */
+
+            z-index: 10;
+            /* 겹칠 때 위로 나오게 */
+        }
+
+        .saved-time-header {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-grow: 1;
+        }
+
+        .saved-time-title {
+            font-size: 25px;
+            font-weight: bold;
+            color: #000000;
+        }
+
+        .saved-time-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 15px;
+            font-weight: 500;
+            color: #222;
+        }
+
+        .saved-time-list li {
+            background-color: #f0f8ff;
+            padding: 6px 10px;
+            border-radius: 6px;
+            margin-bottom: 5px;
+        }
+
+        .save-button {
+            width: 100px;
+            height: 37px;
+            border-radius: 7px;
+            background-color: #88cfdc;
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            z-index: 12;
+            /* 버튼이 항상 위에 오도록 */
+        }
+
+        .saved-time-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        body.flash-bg {
+            animation: flash-bg-anim 0.6s alternate 3;
+        }
+
+        @keyframes flash-bg-anim {
+            0% {
+                background-color: #ffdddd;
+            }
+
+            100% {
+                background-color: inherit;
+            }
+        }
+
+        body.dark-mode .mode-indicator {
+            background-color: #404040;
+            color: #000000;
+            /* ✅ 다크모드에서도 글씨는 검정색으로 */
+        }

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Study Helper - 시작</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Helvetica, sans-serif;
+      background-color: #f8f8f8;
+      overflow: hidden;
+    }
+
+    .container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .container.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .text-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .title {
+      font-weight: bold;
+      font-size: 60px;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 1s forwards;
+      animation-delay: 0.5s;
+    }
+    .welcome-message {
+      font-weight: bold;
+      font-size: 40px;
+      margin-bottom: 20px;
+      color: #88cfdc;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 1s forwards;
+      animation-delay: 1.5s;
+    }
+    .subtitle {
+      font-weight: bold;
+      font-size: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideIn 1s forwards;
+      animation-delay: 2.5s;
+    }
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* 닉네임 입력 팝업 */
+    .nickname-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+    .nickname-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      width: 300px;
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      font-size: 22px;
+      color: #333;
+    }
+    .modal-content input[type="text"] {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .modal-content button {
+      background-color: #88cfdc;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .modal-content button:hover {
+      background-color: #6fbcc8;
+    }
+
+    /* 문 열림 효과 */
+    .door-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      z-index: 3000;
+      visibility: hidden;
+    }
+    .door {
+      width: 50%;
+      height: 100%;
+      background-color: #333; /* 어두운 문 */
+      transition: transform 1s ease-in-out;
+    }
+    .left-door {
+      transform-origin: right;
+      transform: translateX(0);
+    }
+    .right-door {
+      transform-origin: left;
+      transform: translateX(0);
+    }
+    .door-overlay.active .left-door {
+      transform: translateX(-100%);
+    }
+    .door-overlay.active .right-door {
+      transform: translateX(100%);
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="main-container" onclick="goToPage2()">
+    <div class="text-block">
+      <div class="title">Smart Study Helper</div>
+      <div class="welcome-message" id="welcome-message" style="display: none;"></div>
+      <div class="subtitle">집중에 도움을 주는 스마트 스터디 도우미입니다.<br>지금 바로 학습을 시작해보세요.</div>
+    </div>
+  </div>
+
+  <div class="nickname-modal" id="nickname-modal">
+    <div class="modal-content">
+      <h3>닉네임을 입력해주세요</h3>
+      <input type="text" id="nickname-input" placeholder="예: 스터디 마스터" />
+      <button id="save-nickname-button">시작하기</button>
+    </div>
+  </div>
+
+  <div class="door-overlay" id="door-overlay">
+    <div class="door left-door"></div>
+    <div class="door right-door"></div>
+  </div>
+
+  <script>
+    const mainContainer = document.getElementById('main-container');
+    const nicknameModal = document.getElementById('nickname-modal');
+    const nicknameInput = document.getElementById('nickname-input');
+    const saveNicknameButton = document.getElementById('save-nickname-button');
+    const welcomeMessage = document.getElementById('welcome-message');
+    const doorOverlay = document.getElementById('door-overlay');
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedNickname = localStorage.getItem('userNickname');
+      if (!savedNickname) {
+        nicknameModal.classList.add('show');
+      } else {
+        showWelcome(savedNickname);
+      }
+    });
+
+    saveNicknameButton.addEventListener('click', () => {
+      const nickname = nicknameInput.value.trim();
+      if (nickname) {
+        localStorage.setItem('userNickname', nickname);
+        nicknameModal.classList.remove('show');
+        showWelcome(nickname);
+      } else {
+        alert('닉네임을 입력해주세요!');
+      }
+    });
+
+    function showWelcome(nickname) {
+      welcomeMessage.textContent = `${nickname}님, 환영합니다!`;
+      welcomeMessage.style.display = 'block';
+      mainContainer.classList.add('show');
+    }
+
+    function goToPage2() {
+      mainContainer.style.pointerEvents = 'none';
+      doorOverlay.style.visibility = 'visible';
+      setTimeout(() => {
+        doorOverlay.classList.add('active');
+      }, 100); // 문 열기 시작
+      setTimeout(() => {
+        window.location.href = 'page2.html';
+      }, 1200); // 문 열리고 난 뒤 이동
+    }
+  </script>
+</body>
+</html>

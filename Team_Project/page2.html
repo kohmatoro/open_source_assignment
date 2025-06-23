@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Study Helper</title>
+    <link rel="stylesheet" href="page2.css">
+</head>
+
+<body>
+    <button class="dark-mode-toggle" id="dark-mode-toggle">
+        <img id="dark-mode-icon" src="image/dark.svg" alt="다크 모드 토글">
+    </button>
+
+    <div class="header">Smart Study Helper</div>
+
+    <div class="top-row">
+        <div class="button-box2">
+            <div id="mode-indicator" class="mode-indicator" style="background-color: rgb(224, 247, 250);">집중 모드
+            </div>
+        </div>
+    </div>
+
+    <div class="main-wrapper">
+        <div class="timer-card">
+            <div class="timer-display" id="timer-display">00 : 00 : 00</div>
+        </div>
+
+        <div class="middle-row">
+            <div class="button-box">
+                <button class="round-button" id="stopwatch-mode-button">
+                    <img src="image/timer.svg" alt="스톱워치 모드"> </button>
+                <button class="round-button" id="toggle-timer-button">
+                    <img src="image/start.svg" alt="시작/정지" />
+                </button>
+                <button class="round-button" id="reset-timer-button">
+                    <img src="image/refresh.svg" alt="리셋" />
+                </button>
+            </div>
+
+            <div class="time-settings-and-tip-wrapper">
+                <div class="time-setting-box">
+                    <button class="apply-button">적용</button>
+                    <div class="label">시간 설정</div>
+                    <label>집중</label>
+                    <div class="time-setting-inputs">
+                        <input type="number" id="focus-h" value="0" />
+                        <input type="number" id="focus-m" value="25" />
+                        <input type="number" id="focus-s" value="0" />
+                    </div>
+                    <label>휴식</label>
+                    <div class="time-setting-inputs">
+                        <input type="number" id="break-h" value="0" />
+                        <input type="number" id="break-m" value="5" />
+                        <input type="number" id="break-s" value="0" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tip-box" id="focus-tip">집중 팁이 여기에 표시됩니다.</div>
+        <audio id="alarm-sound" src="alarm/alarm.mp3" preload="auto"></audio>
+
+        <div id="custom-alert" style="
+        display: none;
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #F9CECE;
+        border: 1px solid #ffffff;
+        padding: 15px 25px;
+        border-radius: 8px;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        z-index: 9999;
+        ">
+            타이머 종료!
+        </div>
+
+
+        <div class="music-box">
+            <div class="music-info">
+                <div class="title">음악 제목</div>
+                <div class="artist">음악 아티스트</div>
+                <audio id="audio-player" src="music/heater-58674.mp3"></audio>
+            </div>
+            <div class="music-controls">
+                <button class="icon-button mute" id="mute-button">
+                    <img src="image/mute.svg" alt="음소거" />
+                </button>
+                <button class="icon-button" id="prev-track-button">
+                    <img src="image/skip_previous.svg" alt="이전 곡" />
+                </button>
+                <button class="icon-button" id="play-music-button">
+                    <img src="image/start.svg" alt="재생/일시정지" />
+                </button>
+                <button class="icon-button" id="next-track-button">
+                    <img src="image/skip_next.svg" alt="다음 곡" />
+                </button>
+            </div>
+        </div>
+
+        <div class="saved-time-container">
+            <div class="saved-time-header">
+                <div class="saved-time-title">저장된 시간</div>
+                <ul id="saved-time-list" class="saved-time-list"></ul>
+            </div>
+            <div class="saved-time-buttons">
+                <button class="save-button" id="save-time-button">시간 저장</button>
+                <button class="save-button" id="clear-time-button">초기화</button>
+            </div>
+        </div>
+
+        <script src="page2.js"></script>
+    </div>
+</body>
+
+</html>
